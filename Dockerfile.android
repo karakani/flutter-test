@@ -6,12 +6,13 @@ ENV ANDROID_HOME /opt/android
 
 
 
-RUN mkdir -p ${ANDROID_HOME}
-
 RUN groupadd -g 1001 builder \
  && useradd -u 1001 -g 1001 --create-home builder \
+ && mkdir -p ${ANDROID_HOME} \
  && chown builder:builder -R ${ANDROID_HOME}
 
+
+USER builder
 
 RUN cd ${ANDROID_HOME} \
  && curl -o commandlinetools-linux.zip https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_COMMANDLINETOOLS_REVISION}_latest.zip \
@@ -26,8 +27,6 @@ RUN yes | ${ANDROID_HOME}/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_HOME
       'cmdline-tools;latest'
 RUN yes | ${ANDROID_HOME}/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} --licenses
 
-
-USER builder
 
 WORKDIR /home/builder
 
