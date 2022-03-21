@@ -11,7 +11,7 @@ pipeline {
                     agent {
                         dockerfile {
                             label 'docker'
-                            filename 'Dockerfile.android'
+                            filename 'source/Dockerfile.android'
                         }
                     }
                     steps {
