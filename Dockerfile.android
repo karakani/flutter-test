@@ -22,6 +22,7 @@ RUN cd ${ANDROID_HOME} \
 RUN yes | ${ANDROID_HOME}/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} \
       'build-tools;31.0.0' \
       'platforms;android-31' \
+      'platform-tools' \
       'cmdline-tools;latest'
 RUN yes | ${ANDROID_HOME}/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} --licenses
 
