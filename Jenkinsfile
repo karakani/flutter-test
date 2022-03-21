@@ -14,6 +14,11 @@ pipeline {
                             filename 'source/Dockerfile.android'
                         }
                     }
+                    environment {
+                        // required: used by the flutter command to store settings inside the container
+                        HOME = "${env.WORKSPACE}"
+                    }
+
                     steps {
                         dir("flutter") {
                             checkout([
