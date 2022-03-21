@@ -9,7 +9,10 @@ pipeline {
             parallel {
                 stage('android') {
                     agent {
-                        label "linux"
+                        dockerfile {
+                            label 'docker'
+                            filename 'Dockerfile.android'
+                        }
                     }
                     steps {
                         dir("flutter") {

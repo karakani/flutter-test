@@ -1,0 +1,33 @@
+FROM openjdk:11
+
+ARG ANDROID_COMMANDLINETOOLS_REVISION=8092744
+
+ENV ANDROID_HOME /opt/android
+
+
+
+RUN mkdir -p ${ANDROID_HOME}
+
+RUN groupadd -g 1001 builder \
+ && useradd -u 1001 -g 1001 --create-home builder \
+ && chown builder:builder -R ${ANDROID_HOME}
+
+
+RUN cd ${ANDROID_HOME} \
+ && curl -o commandlinetools-linux.zip https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_COMMANDLINETOOLS_REVISION}_latest.zip \
+ && unzip commandlinetools-linux.zip \
+ && rm -f commandlinetools-linux.zip 
+
+
+RUN yes | ${ANDROID_HOME}/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} \
+      'build-tools;31.0.0' \
+      'platforms;android-31' \
+      'cmdline-tools;latest'
+RUN yes | ${ANDROID_HOME}/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} --licenses
+
+
+USER builder
+
+WORKDIR /home/builder
+
+
