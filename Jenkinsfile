@@ -27,8 +27,9 @@ pipeline {
                                 ])
                         }
                         dir("source") {
+                            sh '../flutter/bin/flutter doctor -v'
                             sh '../flutter/bin/flutter build apk --release'
-                            
+
                             deleteDir()
                         }
                     }
